@@ -15,3 +15,5 @@ class Money:
     def __mul__(self, multiplier):
         return Money(self.amount * multiplier, self.currency)
    
+    def __repr__(self):
+       return f'<{self.currency} {self.amount}>'
