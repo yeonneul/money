@@ -17,6 +17,14 @@ class TestWallet:
         three_dollar = Money(3, 'USD')
         assert one_dollar + two_dollae == three_dollar
 
+    #def test_different_currency(self):
+     #   five_dollar = Money(5,'USD')
+      #  ten_euro = Money(10, 'EUR')
+       # wallet = Wallet()
+        #wallet.adds(five_dollar, ten_euro)
+        # assert wallet.evaluate('USD') == Money(17,'USD');
+
+
 
 class Wallet:
     def __init__(self):
@@ -31,9 +39,11 @@ class Wallet:
     #def extract(self, amount, currency):
     #    self.amount -= amount
 
-    def evaluate(self, moneys):
+    def evaluate(self, currency):
+        money_sum = 0
         for money in moneys:
-            self.moneys.append(money)
+            money_sum += money.amount
+        return Money(money_sum, currency)
 
 
 
