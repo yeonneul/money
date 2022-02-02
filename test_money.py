@@ -24,20 +24,22 @@ class TestWallet:
         wallet.adds(five_dollar, ten_euro)
         assert wallet.evaluate('USD') == Money(17,'USD')
 
+    def test_evaluate_different_currency2(self):
+        one_usd = Money(1,'USD')
+        one_thou_krw = Money(1000,'KRW')
+        wallet = Wallet()
+        wallet.adds(one_usd, one_thou_krw)
+        assert wallet.evaluate('KRW') == Money(2100,'KRW')
+
 
 
 class Wallet:
     def __init__(self):
         self.moneys = []
-        self.euro_to_usd = 1.2
-        self.exchange_rate = {'USD->KWN':1100,'EUR->USD':1.2}
         
     def adds(self, *moneys):
         for money in moneys:
             self.moneys.append(money)
-
-    #def extract(self, amount, currency):
-    #    self.amount -= amount
 
     def evaluate(self, currency):
         money_sum = 0
@@ -45,12 +47,28 @@ class Wallet:
             if currency == money.currency:
                 money_sum += money.amount
             else:
-                exchange_key = f'{money.currency}->{currency}'
-                exchange_rate = self.exchange_rate[exchange_key]
-                money_sum += money.amount * exchange_rate
+                converted_money = convert(money,currency)
+                money_sum +=converted_money.amount
         return Money(money_sum, currency)
 
+    
 
+def test_convert():
+    one_euro = Money(5,'EUR')
+    expected = Money(6,'USD')
+    actual = convert(one_euro,'USD')
+    assert expected == actual
+
+def convert(money,currency):
+    exchange_rates = {'EUR->USD':1.2, 'USD->KRW':1100}
+    if currency == money.currency:
+        return money
+    else:
+        exchange_key = f'{money.currency}->{currency}'
+        exchange_rate = exchange_rates[exchange_key]
+        return Money(money.amount * exchange_rate, currency)
+
+    pass
 
 
 
