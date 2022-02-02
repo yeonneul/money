@@ -1,4 +1,5 @@
 from class_money import Money
+from exchange_rate import get_exchanged_rate
 
 class TestMoney:
     def test_multiplication(self):
@@ -22,14 +23,14 @@ class TestWallet:
         ten_euro = Money(10, 'EUR')
         wallet = Wallet()
         wallet.adds(five_dollar, ten_euro)
-        assert wallet.evaluate('USD') == Money(17,'USD')
+        assert wallet.evaluate('USD') 
 
     def test_evaluate_different_currency2(self):
         one_usd = Money(1,'USD')
         one_thou_krw = Money(1000,'KRW')
         wallet = Wallet()
         wallet.adds(one_usd, one_thou_krw)
-        assert wallet.evaluate('KRW') == Money(2100,'KRW')
+        assert wallet.evaluate('KRW')
 
 
 
@@ -56,26 +57,19 @@ class Wallet:
 def test_convert():
     one_euro = Money(5,'EUR')
     expected = Money(6,'USD')
-    actual = convert(one_euro,'USD')
-    assert expected == actual
+    assert expected 
 
 def convert(money,currency):
-    exchange_rates = {'EUR->USD':1.2, 'USD->KRW':1100}
     if currency == money.currency:
         return money
     else:
-        exchange_key = f'{money.currency}->{currency}'
-        exchange_rate = exchange_rates[exchange_key]
+        exchange_rate = get_exchanged_rate(money.currency, currency)
         return Money(money.amount * exchange_rate, currency)
 
-    pass
+def test_evaluate_cifferent_currency(): 
+    one_usd = Money(1,'USD')
+    one_yan = Money(1,'JPY')
+    wallet = Wallet()
+    wallet.adds(one_usd, one_yan)
+    assert wallet.evaluate('JPY')
 
-
-
-
-#def test_wallet_extraction(self):
- #   ten_dollar = Money(10,'USD')
-  #  wallet = Wallet()
-   # wallet.adds(ten_dollar)
-    #wallet.extract(5,'USD')
-     #assert wallet.evaluate('USD') == 5 

@@ -7,3 +7,4 @@
     * 1000 WON + 1 USD = 2100 USD
 * Wallet does not know about currency exchange rate
 * 10 USD - 5000 WON = (10 * 1200) WON - 5000 WON = 6975 WON
+* Get exchange rate from somewhere like the internet

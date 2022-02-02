@@ -17,5 +17,3 @@ class Money:
    
     def __repr__(self):
        return f'<{self.currency} {self.amount}>'
-
-    
